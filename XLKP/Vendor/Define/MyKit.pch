@@ -1,0 +1,51 @@
+//
+//  MyKit.pch
+//  XLIM
+//
+//  Created by Facebook on 2017/11/15.
+//  Copyright © 2017年 Facebook. All rights reserved.
+//
+
+#ifndef Mykit_pch
+#define Mykit_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+///MARK: 腾讯云
+#import <ImSDK/ImSDK.h>
+#import <QALSDK/QalSDKProxy.h>
+#import <QALSDK/QalSDKCallbackProtocol.h>
+#import "TLSSDK/TLSAccountHelper.h"
+#import "TLSSDK/TLSLoginHelper.h"
+#import "TLSSDK/TLSRefreshTicketListener.h"
+#import "TLSSDK/TLSOpenLoginListener.h"
+#import "TLSSDK/TLSHelper.h"
+#import <IMMessageExt/IMMessageExt.h>
+
+///MARK:宏定义
+#import "ThreePartyKey.h"
+#import "Chat.h"
+
+///MARK: 类目
+#import "NSDate+Category.h"
+#import "AppDelegate+Category.h"
+#import "UILabel+ZDKExtent.h"
+#import "UIButton+Category.h"
+#import "NSString+FixedHeight.h"
+#import "UIImage+TintColor.h"
+#import "NSString+Category.h"
+
+///MARK: Base
+#import "XLBaseTableViewCell.h"
+#import "WY_BaseModel.h"
+
+///MARK: 第三方
+#import <Masonry.h>
+#import <MJExtension/MJExtension.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIButton+WebCache.h>
+#import <FTAnimation+UIView.h>
+#import <FTAnimation.h>
+#endif /* MyKit_pch */
