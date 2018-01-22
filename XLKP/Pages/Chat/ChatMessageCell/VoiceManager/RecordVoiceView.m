@@ -26,68 +26,67 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]){
-        [self setup];
+       
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+        NSError *sessionError;
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
+        
+        NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+        [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
+        [recordSetting setValue:[NSNumber numberWithFloat:11025.0] forKey:AVSampleRateKey];
+        [recordSetting setValue:[NSNumber numberWithInt:2] forKey:AVNumberOfChannelsKey];
+        [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+        [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
+        
+        _recordUrl = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingString:@"record.caf"]];
+        NSError *error;
+        _audioRecorder = [[AVAudioRecorder alloc] initWithURL:_recordUrl settings:recordSetting error:&error];
+        _audioRecorder.meteringEnabled = YES;
+        
+        [self addSubview:self.recordImageView];
+        [self addSubview:self.yinjieImageView];
+        [self addSubview:self.maskView];
+        [self addSubview:self.titleLabel];
+        
+        [self mas_remakeConstraints:^(MASConstraintMaker *make)
+         {
+             make.width.mas_equalTo (@(140));
+             make.height.mas_equalTo (@(140));
+         }];
+        
+        [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make)
+         {
+             make.left.equalTo(self.mas_left).with.offset(10);
+             make.right.equalTo(self.mas_right).with.offset(-10);
+             make.height.mas_equalTo(@(16));
+             make.bottom.equalTo(self.mas_bottom).with.offset(-10);
+         }];
+        
+        [self.recordImageView mas_remakeConstraints:^(MASConstraintMaker *make)
+         {
+             make.centerX.equalTo(self.mas_centerX).with.offset(-20);
+             make.centerY.equalTo(self.mas_centerY).with.offset(0);
+             make.height.equalTo(self.mas_height).with.offset(-20);
+         }];
+        
+        [self.yinjieImageView mas_remakeConstraints:^(MASConstraintMaker *make)
+         {
+             make.left.equalTo(self.recordImageView.mas_right).with.offset(10);
+             make.bottom.equalTo(self.recordImageView.mas_bottom).with.offset(0);
+             make.height.equalTo(self.mas_height).with.offset(-80);
+         }];
+        
+        [self.maskView mas_remakeConstraints:^(MASConstraintMaker *make)
+         {
+             make.left.equalTo(self.recordImageView.mas_right).with.offset(10);
+             make.top.equalTo(self.yinjieImageView.mas_top).with.offset(0);
+             // make.height.mas_equalTo(0);
+         }];
+        
     }
     return self;
 }
 
-- (void)setup{
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSError *sessionError;
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
-    
-    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
-    [recordSetting setValue:[NSNumber numberWithFloat:11025.0] forKey:AVSampleRateKey];
-    [recordSetting setValue:[NSNumber numberWithInt:2] forKey:AVNumberOfChannelsKey];
-    [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
-    [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
-    
-    _recordUrl = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingString:@"record.caf"]];
-    NSError *error;
-    _audioRecorder = [[AVAudioRecorder alloc] initWithURL:_recordUrl settings:recordSetting error:&error];
-    _audioRecorder.meteringEnabled = YES;
-    
-    [self addSubview:self.recordImageView];
-    [self addSubview:self.yinjieImageView];
-    [self addSubview:self.maskView];
-    [self addSubview:self.titleLabel];
-    
-    [self mas_remakeConstraints:^(MASConstraintMaker *make)
-     {
-         make.width.mas_equalTo (@(140));
-         make.height.mas_equalTo (@(140));
-     }];
-    
-    [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make)
-     {
-         make.left.equalTo(self.mas_left).with.offset(10);
-         make.right.equalTo(self.mas_right).with.offset(-10);
-         make.height.mas_equalTo(@(16));
-         make.bottom.equalTo(self.mas_bottom).with.offset(-5);
-     }];
-    
-    [self.recordImageView mas_remakeConstraints:^(MASConstraintMaker *make)
-     {
-         make.centerX.equalTo(self.mas_centerX).with.offset(-20);
-         make.centerY.equalTo(self.mas_centerY).with.offset(0);
-         make.height.equalTo(self.mas_height).with.offset(-20);
-     }];
-    
-    [self.yinjieImageView mas_remakeConstraints:^(MASConstraintMaker *make)
-     {
-         make.left.equalTo(self.recordImageView.mas_right).with.offset(10);
-         make.bottom.equalTo(self.recordImageView.mas_bottom).with.offset(0);
-         make.height.equalTo(self.mas_height).with.offset(-80);
-     }];
-    
-//        [self.maskView mas_remakeConstraints:^(MASConstraintMaker *make)
-//         {
-//             make.left.equalTo(self.recordImageView.mas_right).with.offset(10);
-//             make.top.equalTo(self.yinjieImageView.mas_top).with.offset(0);
-//            // make.height.mas_equalTo(0);
-//         }];
-}
 
 #pragma mark - 私有方法
 - (void)changeImage
@@ -161,11 +160,10 @@
 - (void)updateContinueRecordVoice
 {
     _yinjieImageView.hidden = NO;
-    _titleLabel.backgroundColor = [UIColor redColor];
+    _titleLabel.backgroundColor = [UIColor clearColor];
     _titleLabel.text = @"手指上滑，取消发送";
     _recordImageView.image = [UIImage imageNamed:@"yuyin"];
-    [self.recordImageView mas_remakeConstraints:^(MASConstraintMaker *make)
-     {
+    [self.recordImageView mas_remakeConstraints:^(MASConstraintMaker *make){
          make.centerX.equalTo(self.mas_centerX).with.offset(-20);
          make.centerY.equalTo(self.mas_centerY).with.offset(0);
      }];
@@ -212,8 +210,8 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.font = [UIFont systemFontOfSize:10];
-        _titleLabel.backgroundColor = [UIColor redColor];
+        _titleLabel.font = [UIFont systemFontOfSize:12];
+        _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.text = @"手指上滑，取消发送";
         _titleLabel.layer.cornerRadius = 5;
         _titleLabel.clipsToBounds = YES;
@@ -222,3 +220,4 @@
     return _titleLabel;
 }
 @end
+

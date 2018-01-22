@@ -21,7 +21,7 @@
 #define TextViewVerticalOffset  (ItemH-TextViewH)/2.0
 #define TextViewMargin          8
 
-@interface ChatToolBar ()<RFTextViewDelegate>
+@interface ChatToolBar ()<RFTextViewDelegate,recordButtoDelegate>
 
 @property CGFloat previousTextViewHeight;
 
@@ -84,6 +84,7 @@
     self.faceBtn = [self createBtn:kButKindFace action:@selector(toolbarBtnClick:)];
     self.moreBtn = [self createBtn:kButKindMore action:@selector(toolbarBtnClick:)];
     self.recordBtn = [[RFRecordButton alloc] init];
+    self.recordBtn.delegate = self;
     
     self.textView = [[RFTextView alloc] init];
     self.textView.frame = CGRectMake(0, 0, 0, TextViewH);
@@ -101,54 +102,56 @@
     
     //KVO
     [self addObserver:self forKeyPath:@"self.textView.contentSize" options:(NSKeyValueObservingOptionNew) context:nil];
-   
+}
+
+- (void)startRecordVoiceWithButton:(RFRecordButton *)sender{
+    NSLog(@"开始录音");
     __weak __typeof(self) weekSelf = self;
-    self.recordBtn.recordTouchDownAction = ^(RFRecordButton *sender){
-        NSLog(@"开始录音");
-        if (sender.highlighted) {
-            sender.highlighted = YES;
-            [sender setButtonStateWithRecording];
-        }
-        if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarDidStartRecording:)]) {
-            [weekSelf.delegate chatToolBarDidStartRecording:weekSelf];
-        }
-    };
-    self.recordBtn.recordTouchUpInsideAction = ^(RFRecordButton *sender){
-        NSLog(@"完成录音");
-        [sender setButtonStateWithNormal];
-        if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarDidFinishRecoding:)]) {
-            [weekSelf.delegate chatToolBarDidFinishRecoding:weekSelf];
-        }
-    };
-    self.recordBtn.recordTouchUpOutsideAction = ^(RFRecordButton *sender){
-        NSLog(@"取消录音");
-        [sender setButtonStateWithNormal];
-        if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarDidCancelRecording:)]) {
-            [weekSelf.delegate chatToolBarDidCancelRecording:weekSelf];
-        }
-    };
+    if (sender.highlighted) {
+        sender.highlighted = YES;
+        [sender setButtonStateWithRecording];
+    }
+    if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarDidStartRecording:)]) {
+        [weekSelf.delegate chatToolBarDidStartRecording:weekSelf];
+    }
+}
+
+- (void)cancelRecordVoiceWithButton:(RFRecordButton *)sender{
+    NSLog(@"取消录音");
+    __weak __typeof(self) weekSelf = self;
+    [sender setButtonStateWithNormal];
+    if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarDidCancelRecording:)]) {
+        [weekSelf.delegate chatToolBarDidCancelRecording:weekSelf];
+    }
     
-    //持续调用
-    self.recordBtn.recordTouchDragInsideAction = ^(RFRecordButton *sender){
-    };
-    //持续调用
-    self.recordBtn.recordTouchDragOutsideAction = ^(RFRecordButton *sender){
-    };
-    
-    //中间状态  从 TouchDragInside ---> TouchDragOutside
-    self.recordBtn.recordTouchDragExitAction = ^(RFRecordButton *sender){
-        NSLog(@"将要取消录音");
-        if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarWillCancelRecoding:)]) {
-            [weekSelf.delegate chatToolBarWillCancelRecoding:weekSelf];
-        }
-    };
-    //中间状态  从 TouchDragOutside ---> TouchDragInside
-    self.recordBtn.recordTouchDragEnterAction = ^(RFRecordButton *sender){
-        NSLog(@"继续录音");
-        if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarContineRecording:)]) {
-            [weekSelf.delegate chatToolBarContineRecording:weekSelf];
-        }
-    };
+}
+
+- (void)endRecordVoiceWithButton:(RFRecordButton *)sender{
+    NSLog(@"完成录音");
+    __weak __typeof(self) weekSelf = self;
+    [sender setButtonStateWithNormal];
+    if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarDidFinishRecoding:)]) {
+        [weekSelf.delegate chatToolBarDidFinishRecoding:weekSelf];
+    }
+}
+
+- (void)updateCancelRecordVoiceWithButton:(RFRecordButton *)sender{
+    NSLog(@"松开 取消");
+    __weak __typeof(self) weekSelf = self;
+    [sender setButtonStateWithRecordingCancel];
+    if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarUpdateCancelRecording:)]) {
+        [weekSelf.delegate chatToolBarUpdateCancelRecording:weekSelf];
+    }
+}
+
+
+- (void)updateContinueRecordVoiceWithButton:(RFRecordButton *)sender{
+    NSLog(@"松开 结束");
+    __weak __typeof(self) weekSelf = self;
+    [sender setButtonStateWithRecording];
+    if ([weekSelf.delegate respondsToSelector:@selector(chatToolBarUpdateContinueRecording:)]) {
+        [weekSelf.delegate chatToolBarUpdateContinueRecording:weekSelf];
+    }
 }
 
 // 设置子视图frame
@@ -461,7 +464,7 @@ selectStateImageStr:(NSString *)selectStr highLightStateImageStr:(NSString *)hig
     {
         [self.delegate chatToolBar:self faceBtnPressed:sender.selected keyBoardState:keyBoardChanged];
     }
-
+    
 }
 
 - (void)handelMoreClick:(UIButton *)sender
@@ -494,7 +497,7 @@ selectStateImageStr:(NSString *)selectStr highLightStateImageStr:(NSString *)hig
     {
         [self.delegate chatToolBar:self moreBtnPressed:sender.selected keyBoardState:keyBoardChanged];
     }
-
+    
 }
 - (void)handelSwitchBarClick:(UIButton *)sender
 {
@@ -642,8 +645,8 @@ selectStateImageStr:(NSString *)selectStr highLightStateImageStr:(NSString *)hig
                              }
                              CGRect inputViewFrame = self.frame;
                              self.frame = CGRectMake(0.0f,
-                                                    0, //inputViewFrame.origin.y - changeInHeight
-                                                    inputViewFrame.size.width,
+                                                     0, //inputViewFrame.origin.y - changeInHeight
+                                                     inputViewFrame.size.width,
                                                      (inputViewFrame.size.height + changeInHeight));
                              if (!isShrinking) {
                                  if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
@@ -696,3 +699,4 @@ selectStateImageStr:(NSString *)selectStr highLightStateImageStr:(NSString *)hig
 
 
 @end
+

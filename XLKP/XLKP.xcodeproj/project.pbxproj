@@ -11,6 +11,7 @@
 		A648ADBA03E601A16B54344B /* libPods-XLKP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A5511B7C5DB497DAC4FD1A6 /* libPods-XLKP.a */; };
 		D00AAAAF1FCFAE7800C3B18D /* RecordVoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = D00AAAAE1FCFAE7800C3B18D /* RecordVoiceView.m */; };
 		D0250611200737CF0029A56A /* NSObject+CommonBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = D025060F200737CF0029A56A /* NSObject+CommonBlock.m */; };
+		D02506952008A6980029A56A /* RFRecordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D02506942008A6980029A56A /* RFRecordButton.m */; };
 		D02978AB1FFE19AE001C1C87 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = D02978841FFE19AD001C1C87 /* NSString+Emoji.m */; };
 		D02978AC1FFE19AE001C1C87 /* ChatKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = D02978861FFE19AD001C1C87 /* ChatKeyBoard.m */; };
 		D02978AD1FFE19AE001C1C87 /* ChatToolBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D029788A1FFE19AD001C1C87 /* ChatToolBarItem.m */; };
@@ -27,7 +28,6 @@
 		D02978B81FFE19AE001C1C87 /* MorePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = D02978A11FFE19AD001C1C87 /* MorePanel.m */; };
 		D02978B91FFE19AE001C1C87 /* ChatToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D02978A41FFE19AD001C1C87 /* ChatToolBar.m */; };
 		D02978BA1FFE19AE001C1C87 /* OfficialAccountToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = D02978A61FFE19AD001C1C87 /* OfficialAccountToolbar.m */; };
-		D02978BB1FFE19AE001C1C87 /* RFRecordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D02978A81FFE19AD001C1C87 /* RFRecordButton.m */; };
 		D02978BC1FFE19AE001C1C87 /* RFTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D02978AA1FFE19AD001C1C87 /* RFTextView.m */; };
 		D02978BF1FFE1B2A001C1C87 /* FaceSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D02978BE1FFE1B2A001C1C87 /* FaceSourceManager.m */; };
 		D02978C31FFE29B1001C1C87 /* ImagePickerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D02978C21FFE29B1001C1C87 /* ImagePickerUtil.m */; };
@@ -56,6 +56,7 @@
 		D02C59B31FCD7C2E00EEFABA /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D02C59B21FCD7C2E00EEFABA /* ChatViewController.m */; };
 		D02C59BA1FCD865000EEFABA /* CachePath.m in Sources */ = {isa = PBXBuildFile; fileRef = D02C59B91FCD865000EEFABA /* CachePath.m */; };
 		D02C59BD1FCDBBA300EEFABA /* NSObject+TIMMessageBoby.m in Sources */ = {isa = PBXBuildFile; fileRef = D02C59BC1FCDBBA300EEFABA /* NSObject+TIMMessageBoby.m */; };
+		D0CB59EF201588E300B0A0D9 /* MBProgressHUD+XM.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CB59EE201588E300B0A0D9 /* MBProgressHUD+XM.m */; };
 		D0D44EC01FCBA2C60075B4DC /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D44EBF1FCBA2C60075B4DC /* NSString+Category.m */; };
 		D0E7866D1FFF038900D532DC /* imagePickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E7866C1FFF038900D532DC /* imagePickModel.m */; };
 		D0E786751FFF209800D532DC /* XLAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E786741FFF209800D532DC /* XLAVPlayer.m */; };
@@ -128,6 +129,8 @@
 		D00AAAAE1FCFAE7800C3B18D /* RecordVoiceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecordVoiceView.m; sourceTree = "<group>"; };
 		D025060F200737CF0029A56A /* NSObject+CommonBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+CommonBlock.m"; sourceTree = "<group>"; };
 		D0250610200737CF0029A56A /* NSObject+CommonBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+CommonBlock.h"; sourceTree = "<group>"; };
+		D02506932008A6980029A56A /* RFRecordButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFRecordButton.h; sourceTree = "<group>"; };
+		D02506942008A6980029A56A /* RFRecordButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFRecordButton.m; sourceTree = "<group>"; };
 		D02978831FFE19AD001C1C87 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
 		D02978841FFE19AD001C1C87 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		D02978851FFE19AD001C1C87 /* ChatKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatKeyBoard.h; sourceTree = "<group>"; };
@@ -158,8 +161,6 @@
 		D02978A41FFE19AD001C1C87 /* ChatToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatToolBar.m; sourceTree = "<group>"; };
 		D02978A51FFE19AD001C1C87 /* OfficialAccountToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfficialAccountToolbar.h; sourceTree = "<group>"; };
 		D02978A61FFE19AD001C1C87 /* OfficialAccountToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfficialAccountToolbar.m; sourceTree = "<group>"; };
-		D02978A71FFE19AD001C1C87 /* RFRecordButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFRecordButton.h; sourceTree = "<group>"; };
-		D02978A81FFE19AD001C1C87 /* RFRecordButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFRecordButton.m; sourceTree = "<group>"; };
 		D02978A91FFE19AD001C1C87 /* RFTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFTextView.h; sourceTree = "<group>"; };
 		D02978AA1FFE19AD001C1C87 /* RFTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFTextView.m; sourceTree = "<group>"; };
 		D02978BD1FFE1B2A001C1C87 /* FaceSourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceSourceManager.h; path = Vendor/View/KeyBoard/FaceSourceManager.h; sourceTree = SOURCE_ROOT; };
@@ -218,6 +219,8 @@
 		D02C59B91FCD865000EEFABA /* CachePath.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CachePath.m; sourceTree = "<group>"; };
 		D02C59BB1FCDBBA300EEFABA /* NSObject+TIMMessageBoby.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+TIMMessageBoby.h"; sourceTree = "<group>"; };
 		D02C59BC1FCDBBA300EEFABA /* NSObject+TIMMessageBoby.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TIMMessageBoby.m"; sourceTree = "<group>"; };
+		D0CB59ED201588E300B0A0D9 /* MBProgressHUD+XM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+XM.h"; sourceTree = "<group>"; };
+		D0CB59EE201588E300B0A0D9 /* MBProgressHUD+XM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+XM.m"; sourceTree = "<group>"; };
 		D0D44EBE1FCBA2C60075B4DC /* NSString+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Category.h"; sourceTree = "<group>"; };
 		D0D44EBF1FCBA2C60075B4DC /* NSString+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Category.m"; sourceTree = "<group>"; };
 		D0E7866B1FFF038900D532DC /* imagePickModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imagePickModel.h; sourceTree = "<group>"; };
@@ -434,8 +437,8 @@
 				D02978A41FFE19AD001C1C87 /* ChatToolBar.m */,
 				D02978A51FFE19AD001C1C87 /* OfficialAccountToolbar.h */,
 				D02978A61FFE19AD001C1C87 /* OfficialAccountToolbar.m */,
-				D02978A71FFE19AD001C1C87 /* RFRecordButton.h */,
-				D02978A81FFE19AD001C1C87 /* RFRecordButton.m */,
+				D02506932008A6980029A56A /* RFRecordButton.h */,
+				D02506942008A6980029A56A /* RFRecordButton.m */,
 				D02978A91FFE19AD001C1C87 /* RFTextView.h */,
 				D02978AA1FFE19AD001C1C87 /* RFTextView.m */,
 			);
@@ -598,6 +601,7 @@
 		D036E8341FE792CC008E08F3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D0CB59EC201588BF00B0A0D9 /* prompt util */,
 				D0E786721FFF208E00D532DC /* player util */,
 				D02978C51FFE2ACB001C1C87 /* alert util */,
 				D02978C01FFE299D001C1C87 /* image picker */,
@@ -605,6 +609,15 @@
 				D0FF17351FC812E40027C5ED /* FBKVOController */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D0CB59EC201588BF00B0A0D9 /* prompt util */ = {
+			isa = PBXGroup;
+			children = (
+				D0CB59ED201588E300B0A0D9 /* MBProgressHUD+XM.h */,
+				D0CB59EE201588E300B0A0D9 /* MBProgressHUD+XM.m */,
+			);
+			path = "prompt util";
 			sourceTree = "<group>";
 		};
 		D0E786721FFF208E00D532DC /* player util */ = {
@@ -1162,7 +1175,6 @@
 				D0FF169F1FC3F53D0027C5ED /* AppDelegate+Category.m in Sources */,
 				D02C59351FCCE77E00EEFABA /* ChatMessageCell.m in Sources */,
 				D02C596A1FCD124200EEFABA /* ChatTextMessageCell.m in Sources */,
-				D02978BB1FFE19AE001C1C87 /* RFRecordButton.m in Sources */,
 				D02978B31FFE19AE001C1C87 /* FaceButton.m in Sources */,
 				D0FF16A41FC3F53D0027C5ED /* XLConversationTableViewCell.m in Sources */,
 				D02978B81FFE19AE001C1C87 /* MorePanel.m in Sources */,
@@ -1188,6 +1200,7 @@
 				D0FF17071FC569E40027C5ED /* XLUserInfo.m in Sources */,
 				D02C59B31FCD7C2E00EEFABA /* ChatViewController.m in Sources */,
 				D0250611200737CF0029A56A /* NSObject+CommonBlock.m in Sources */,
+				D0CB59EF201588E300B0A0D9 /* MBProgressHUD+XM.m in Sources */,
 				D02978BA1FFE19AE001C1C87 /* OfficialAccountToolbar.m in Sources */,
 				D0FF16491FC3F49C0027C5ED /* ViewController.m in Sources */,
 				D0FF16541FC3F49C0027C5ED /* main.m in Sources */,
@@ -1207,6 +1220,7 @@
 				D0FF169E1FC3F53D0027C5ED /* XLBaseTableViewCell.m in Sources */,
 				D02C59631FCD10C400EEFABA /* MessageStateManager.m in Sources */,
 				D02978B51FFE19AE001C1C87 /* FacePanel.m in Sources */,
+				D02506952008A6980029A56A /* RFRecordButton.m in Sources */,
 				D0FF16A01FC3F53D0027C5ED /* XLTabBarViewController.m in Sources */,
 				D02978B61FFE19AE001C1C87 /* FaceThemeView.m in Sources */,
 				D0FF16771FC3F5000027C5ED /* AppDelegate.mm in Sources */,

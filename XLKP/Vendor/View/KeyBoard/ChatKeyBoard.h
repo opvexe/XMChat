@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger, KeyBoardStyle)
 - (void)chatKeyBoardDidFinishRecoding:(ChatKeyBoard *)chatKeyBoard;
 - (void)chatKeyBoardWillCancelRecoding:(ChatKeyBoard *)chatKeyBoard;
 - (void)chatKeyBoardContineRecording:(ChatKeyBoard *)chatKeyBoard;
+- (void)chatKeyBoardUpdateCancelRecording:(ChatKeyBoard *)chatKeyBoard;
+- (void)chatKeyBoardUpdateContinueRecording:(ChatKeyBoard *)chatKeyBoard;
 
 /**
  *  输入状态

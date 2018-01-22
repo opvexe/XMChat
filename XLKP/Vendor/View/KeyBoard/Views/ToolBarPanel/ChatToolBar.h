@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, ButKind)
 - (void)chatToolBarDidFinishRecoding:(ChatToolBar *)toolBar;
 - (void)chatToolBarWillCancelRecoding:(ChatToolBar *)toolBar;
 - (void)chatToolBarContineRecording:(ChatToolBar *)toolBar;
+- (void)chatToolBarUpdateCancelRecording:(ChatToolBar *)toolBar;
+- (void)chatToolBarUpdateContinueRecording:(ChatToolBar *)toolBar;
 
 - (void)chatToolBarTextViewDidBeginEditing:(UITextView *)textView;
 - (void)chatToolBarSendText:(NSString *)text;

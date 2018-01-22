@@ -25,4 +25,5 @@ pod 'SwipeView'
 pod 'UITableView+FDTemplateLayoutCell'
 pod 'ZLPhotoBrowser'
 pod 'MJRefresh'
+pod 'MBProgressHUD'
 end

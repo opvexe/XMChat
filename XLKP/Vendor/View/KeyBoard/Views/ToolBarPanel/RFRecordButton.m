@@ -1,13 +1,9 @@
 //
 //  RFRecordButton.m
-//  FaceKeyboard
-
-//  Company：     SunEee
-//  Blog:        devcai.com
-//  Communicate: 2581502433@qq.com
-
-//  Created by ruofei on 16/3/29.
-//  Copyright © 2016年 ruofei. All rights reserved.
+//  ReordView
+//
+//  Created by Facebook on 2018/1/12.
+//  Copyright © 2018年 Facebook. All rights reserved.
 //
 
 #import "RFRecordButton.h"
@@ -29,24 +25,32 @@
         self.layer.cornerRadius = 5.0f;
         self.layer.borderWidth = 0.5;
         self.layer.borderColor = [UIColor colorWithWhite:0.6 alpha:1.0].CGColor;
-         
-        [self addTarget:self action:@selector(recordTouchDown) forControlEvents:UIControlEventTouchDown];
-        [self addTarget:self action:@selector(recordTouchUpOutside) forControlEvents:UIControlEventTouchUpOutside];
-        [self addTarget:self action:@selector(recordTouchUpInside) forControlEvents:UIControlEventTouchUpInside];
-        [self addTarget:self action:@selector(recordTouchDragEnter) forControlEvents:UIControlEventTouchDragEnter];
-        [self addTarget:self action:@selector(recordTouchDragInside) forControlEvents:UIControlEventTouchDragInside];
-        [self addTarget:self action:@selector(recordTouchDragOutside) forControlEvents:UIControlEventTouchDragOutside];
-        [self addTarget:self action:@selector(recordTouchDragExit) forControlEvents:UIControlEventTouchDragExit];
+
+        UILongPressGestureRecognizer *presss = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressForRecord:)];
+        [self addGestureRecognizer:presss];
     }
     return self;
 }
 
+/*!
+ * 松开 开始
+ */
+- (void)setButtonStateWithRecordingCancel{
+    self.backgroundColor = kGetColor(214, 215, 220); //214,215,220
+    [self setTitle:@"松开 开始" forState:UIControlStateNormal];
+}
+/*!
+ * 松开 结束
+ */
 - (void)setButtonStateWithRecording
 {
     self.backgroundColor = kGetColor(214, 215, 220); //214,215,220
     [self setTitle:@"松开 结束" forState:UIControlStateNormal];
 }
 
+/*!
+ * 按住 说话
+ */
 - (void)setButtonStateWithNormal
 {
     self.backgroundColor = kGetColor(247, 247, 247);
@@ -54,74 +58,101 @@
 }
 
 
-#pragma mark -- 事件方法回调
-- (void)recordTouchDown
-{
-    if (self.recordTouchDownAction) {
-        self.recordTouchDownAction(self);
+/*!
+ *  长按手势
+ */
+- (void)longPressForRecord:(UILongPressGestureRecognizer *)press{
+    static BOOL bSend;
+    switch (press.state)
+    {
+        case UIGestureRecognizerStateBegan:
+        {
+            [self startRecordVoice];
+            break;
+        }
+        case UIGestureRecognizerStateChanged:
+        {
+            CGPoint currentPoint = [press locationInView:press.view];
+            
+            if (currentPoint.y < -50)
+            {
+                [self updateCancelRecordVoice];
+                bSend = NO;
+            }
+            else
+            {
+                bSend = YES;
+                [self updateContinueRecordVoice];
+            }
+            break;
+        }
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled:
+        {
+            if (bSend)
+            {
+                [self endRecordVoice];
+            }
+            else
+            {
+                [self cancelRecordVoice];
+            }
+            break;
+        }
+        case UIGestureRecognizerStateFailed:
+            NSLog(@"failed");
+            break;
+        default:
+            break;
     }
 }
 
-- (void)recordTouchUpOutside
-{
-    if (self.recordTouchUpOutsideAction) {
-        self.recordTouchUpOutsideAction(self);
-    }
-}
-
-- (void)recordTouchUpInside
-{
-    if (self.recordTouchUpInsideAction) {
-        self.recordTouchUpInsideAction(self);
-    }
-}
-
-- (void)recordTouchDragEnter
-{
-    if (self.recordTouchDragEnterAction) {
-        self.recordTouchDragEnterAction(self);
-    }
-}
-
-- (void)recordTouchDragInside
-{
-    if (self.recordTouchDragInsideAction) {
-        self.recordTouchDragInsideAction(self);
-    }
-}
-
-- (void)recordTouchDragOutside
-{
-    if (self.recordTouchDragOutsideAction) {
-        self.recordTouchDragOutsideAction(self);
-    }
-}
-
-- (void)recordTouchDragExit
-{
-    if (self.recordTouchDragExitAction) {
-        self.recordTouchDragExitAction(self);
-    }
-}
-
-
-//解决按钮放在屏幕底部，touchdown事件延迟响应的问题
 
 /**
-    iOS7之后提供了做滑手势导致的这个问题
-    self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan = NO; 即可
+ *  开始录音
  */
-//- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
-//{
-//    BOOL inside = [super pointInside: point withEvent: event];
-//    
-//    if (inside && !self.highlighted)
-//    {
-//        self.highlighted = YES;
-//        [self sendActionsForControlEvents:UIControlEventTouchDown];
-//    }
-//    
-//    return inside;
-//}
+- (void)startRecordVoice{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(startRecordVoiceWithButton:)]){
+        [self.delegate startRecordVoiceWithButton:self];
+    }
+}
+
+/**
+ *  取消录音
+ */
+- (void)cancelRecordVoice{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cancelRecordVoiceWithButton:)]){
+        [self.delegate cancelRecordVoiceWithButton:self];
+    }
+}
+
+/**
+ *  录音结束
+ */
+- (void)endRecordVoice{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(endRecordVoiceWithButton:)]){
+        [self.delegate endRecordVoiceWithButton:self];
+    }
+}
+
+/**
+ *  更新录音显示状态,手指向上滑动后提示松开取消录音
+ */
+- (void)updateCancelRecordVoice{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(updateCancelRecordVoiceWithButton:)]){
+        [self.delegate updateCancelRecordVoiceWithButton:self];
+    }
+}
+
+/**
+ *  更新录音状态,手指重新滑动到范围内,提示向上取消录音
+ */
+- (void)updateContinueRecordVoice{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(updateContinueRecordVoiceWithButton:)]){
+        [self.delegate updateContinueRecordVoiceWithButton:self];
+    }
+}
+
+
 
 @end

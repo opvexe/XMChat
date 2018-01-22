@@ -371,6 +371,17 @@
     }
 }
 
+- (void)chatToolBarUpdateCancelRecording:(ChatToolBar *)toolBar{
+    if ([self.delegate respondsToSelector:@selector(chatKeyBoardUpdateCancelRecording:)]) {
+        [self.delegate chatKeyBoardUpdateCancelRecording:self];
+    }
+}
+- (void)chatToolBarUpdateContinueRecording:(ChatToolBar *)toolBar{
+    if ([self.delegate respondsToSelector:@selector(chatKeyBoardUpdateContinueRecording:)]) {
+        [self.delegate chatKeyBoardUpdateContinueRecording:self];
+    }
+}
+
 - (void)chatToolBarTextViewDidBeginEditing:(UITextView *)textView
 {
     if ([self.delegate respondsToSelector:@selector(chatKeyBoardTextViewDidBeginEditing:)]) {

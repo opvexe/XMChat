@@ -34,6 +34,9 @@
 #import "LocationViewController.h"
 #import "MapLocationViewController.h"
 
+///录音
+#import "RecordVoiceView.h"
+
 @interface ChatViewController ()<UITableViewDelegate,UITableViewDataSource,TIMMessageListener,ChatMessageCellDelegate,ChatKeyBoardDelegate,ChatKeyBoardDataSource,LocationViewControllerDelegate>
 @property(nonatomic,strong)UITableView *chatTableView;
 @property(nonatomic,strong)NSMutableArray *messageDateSouce;
@@ -47,6 +50,8 @@
 @property (nonatomic, assign) BOOL isOriginal;
 @property(nonatomic,assign)BOOL isEditor;
 
+///录音
+@property(nonatomic,strong)RecordVoiceView *recordView;
 @end
 
 @implementation ChatViewController
@@ -61,6 +66,18 @@
     [[TIMManager sharedInstance]addMessageListener:self];
     [self.view addSubview:self.chatTableView];
     [self.view addSubview:self.chatKeyBoard];
+    [self.view addSubview:self.recordView];
+    [self.view updateConstraintsIfNeeded];
+}
+
+- (void)updateViewConstraints{
+    [super updateViewConstraints];
+    [self.recordView mas_makeConstraints:^(MASConstraintMaker *make){
+         make.width.mas_equalTo (@(140));
+         make.height.mas_equalTo (@(140));
+         make.centerX.equalTo(self.view.mas_centerX).with.offset(0);
+         make.centerY.equalTo(self.view.mas_centerY).with.offset(0);
+     }];
 }
 
 /**
@@ -422,6 +439,31 @@
 }
 
 
+- (RecordVoiceView *)recordView{
+    if (!_recordView){
+        _recordView = [[RecordVoiceView alloc] init];
+        _recordView.layer.cornerRadius = 10;
+        _recordView.clipsToBounds      = YES;
+        _recordView.hidden             = YES;
+        _recordView.backgroundColor    = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+    }
+    return _recordView;
+}
+
+-(NSMutableArray<UIImage *> *)lastSelectPhotos{
+    if (!_lastSelectPhotos) {
+        
+        _lastSelectPhotos = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _lastSelectPhotos;
+}
+
+-(NSMutableArray<PHAsset *> *)lastSelectAssets{
+    if (!_lastSelectAssets) {
+        _lastSelectAssets = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _lastSelectAssets;
+}
 
 #pragma mark    ==============================            <键盘相关>       ==============================
 
@@ -459,23 +501,35 @@
 #pragma mark  ====================================     录音状态相关         ========================================
 - (void)chatKeyBoardDidStartRecording:(ChatKeyBoard *)chatKeyBoard
 {
-    //    self.voiceState.text = @"正在录音";
-}
-- (void)chatKeyBoardDidCancelRecording:(ChatKeyBoard *)chatKeyBoard
-{
-    //    self.voiceState.text = @"已经取消录音";
-}
-- (void)chatKeyBoardDidFinishRecoding:(ChatKeyBoard *)chatKeyBoard
-{
-    //    self.voiceState.text = @"已经完成录音";
+    NSLog(@"开始录音");
+     [_recordView startRecordVoice];
 }
 - (void)chatKeyBoardWillCancelRecoding:(ChatKeyBoard *)chatKeyBoard
 {
-    //    self.voiceState.text = @"将要取消录音";
+    NSLog(@"将要取消录音");
 }
 - (void)chatKeyBoardContineRecording:(ChatKeyBoard *)chatKeyBoard
 {
-    //    self.voiceState.text = @"继续录音";
+    NSLog(@"继续录音");
+}
+- (void)chatKeyBoardDidCancelRecording:(ChatKeyBoard *)chatKeyBoard
+{
+    NSLog(@"已经取消录音");
+    [_recordView cancelRecordVoice];
+}
+- (void)chatKeyBoardDidFinishRecoding:(ChatKeyBoard *)chatKeyBoard
+{
+    NSLog(@"已经完成录音");
+    [_recordView endRecordVoice];
+}
+
+- (void)chatKeyBoardUpdateCancelRecording:(ChatKeyBoard *)chatKeyBoard{
+    NSLog(@" 更新录音显示状态,手指向上滑动后提示松开取消录音");
+    [_recordView updateCancelRecordVoice];
+}
+- (void)chatKeyBoardUpdateContinueRecording:(ChatKeyBoard *)chatKeyBoard{
+    NSLog(@" 更新录音状态,手指重新滑动到范围内,提示向上取消录音");
+    [_recordView updateContinueRecordVoice];
 }
 
 
@@ -716,19 +770,6 @@
     }];
 }
 
--(NSMutableArray<UIImage *> *)lastSelectPhotos{
-    if (!_lastSelectPhotos) {
-        
-        _lastSelectPhotos = [NSMutableArray arrayWithCapacity:0];
-    }
-    return _lastSelectPhotos;
-}
--(NSMutableArray<PHAsset *> *)lastSelectAssets{
-    if (!_lastSelectAssets) {
-        _lastSelectAssets = [NSMutableArray arrayWithCapacity:0];
-    }
-    return _lastSelectAssets;
-}
 
 @end
 
